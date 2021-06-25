@@ -1,9 +1,10 @@
-// TODO: Include packages needed for this application
+// console.log('Hello World!');
 const inquirer = require('inquirer');
 const fs = require('fs');
 
 const generateREADME = (data) =>
-`# ${data.title}
+`
+# ${data.title}
 
 ${data.description}
 
@@ -39,7 +40,7 @@ ${data.tests}
 
 If you have any questions, please send them to ${data.email}
 
-GitHub: [${data.github}](github.com/${data.github})
+GitHub: [${data.github}](http:/github.com/${data.github})
 `;
 
 // TODO: Create an array of questions for user input
@@ -95,18 +96,22 @@ inquirer
     ])
     .then((data)=> {
         const readmeContent = generateREADME(data)
+        if (data.license === 'MIT License') {
+            fs.writeFile('README.md', '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)', (err) =>
+            err ? console.log(err) : console.log('added license')
+            )
+        } else if (data.license === 'Apache License v2.0') {
+            fs.writeFile('README.md', '[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)', (err) =>
+            err ? console.log(err) : console.log('added license')
+            )
+        }else {
+            fs.writeFile('README.md', '[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://img.shields.io/badge/License-GPL%20v2-blue.svg)', (err) =>
+            err ? console.log(err) : console.log('added license')
+            )
+        }
 
-        fs.writeFile('README.md', readmeContent, (err) =>
+        fs.appendFile('README.md', readmeContent, (err) =>
         err ? console.log(err) : console.log('Successfully created README.md!')
         )
     }
     );
-
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) { }
-
-// TODO: Create a function to initialize app
-// function init() { }
-
-// Function call to initialize app
-// init();
